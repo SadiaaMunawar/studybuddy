@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
+  fl_chart: ^0.66.0
 
   # Calendar
   table_calendar: ^3.0.8   # ✅ downgraded for intl 0.17.0 compatibility
