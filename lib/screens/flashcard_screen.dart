@@ -65,13 +65,21 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
             ),
             const SizedBox(height: 12),
 
-            // Save button
+            // Save button (updated style)
             ElevatedButton.icon(
               onPressed: _addFlashcard,
-              icon: const Icon(Icons.save),
-              label: const Text('Save Flashcard'),
+              icon: const Icon(Icons.save, size: 20),
+              label: const Text(
+                'Save Flashcard',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.indigo,
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                minimumSize: const Size.fromHeight(50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
             const SizedBox(height: 20),

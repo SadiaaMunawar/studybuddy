@@ -6,17 +6,14 @@ class AuthProvider extends ChangeNotifier {
   User? _user;
 
   AuthProvider() {
-    // Listen to auth state changes from your AuthService
+    // Listen to auth state changes
     AuthService.authState.listen((u) {
       _user = u;
       notifyListeners();
     });
   }
 
-  /// Expose the current Firebase user
   User? get currentUser => _user;
-
-  /// Whether a user is logged in
   bool get isLoggedIn => _user != null;
 
   Future<void> signInEmail(String email, String password) async {

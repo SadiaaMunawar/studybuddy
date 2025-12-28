@@ -19,6 +19,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: Colors.black),
         title: Row(
           children: [
             Container(
@@ -162,6 +163,10 @@ class HomeScreen extends StatelessWidget {
                       _QuickCard('Groups', Icons.group, Colors.pink, () {
                         Navigator.pushNamed(context, AppRouter.studyGroups);
                       }),
+                      // ✅ NEW OCR Quick Access
+                      _QuickCard('OCR Scanner', Icons.document_scanner, Colors.deepPurple, () {
+                        Navigator.pushNamed(context, AppRouter.ocr);
+                      }),
                     ],
                   ),
 
@@ -280,6 +285,8 @@ class _StatCard extends StatelessWidget {
   }
 }
 
+
+
 class _QuickCard extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -302,12 +309,12 @@ class _QuickCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 20, color: color), // ✅ smaller icon
+              Icon(icon, size: 20, color: color),
               const SizedBox(height: 6),
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 11, // ✅ smaller text
+                  fontSize: 11,
                   fontWeight: FontWeight.w500,
                 ),
                 textAlign: TextAlign.center,
@@ -414,6 +421,12 @@ class StudyBuddyDrawer extends StatelessWidget {
             icon: Icons.calendar_today,
             title: 'Calendar',
             onTap: () => Navigator.pushNamed(context, AppRouter.calendar),
+          ),
+          // ✅ NEW OCR Drawer Item
+          _DrawerTile(
+            icon: Icons.document_scanner,
+            title: 'OCR Scanner',
+            onTap: () => Navigator.pushNamed(context, AppRouter.ocr),
           ),
           const Divider(),
           _DrawerTile(

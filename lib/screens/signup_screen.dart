@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
+import '../app_router.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -29,19 +31,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
         password: passwordController.text.trim(),
       );
 
-      // ✅ Update display name
       await cred.user?.updateDisplayName(nameController.text.trim());
       await cred.user?.reload();
 
-      Navigator.pushReplacementNamed(context, '/home');
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, AppRouter.home);
     } on FirebaseAuthException catch (e) {
-      setState(() {
-        _errorMessage = e.message;
-      });
+      setState(() => _errorMessage = e.message);
+    } catch (e) {
+      setState(() => _errorMessage = 'Something went wrong. Please try again.');
     } finally {
-      setState(() {
-        _loading = false;
-      });
+      if (mounted) setState(() => _loading = false);
     }
   }
 
@@ -52,38 +52,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
 
     try {
-      final googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) {
-        setState(() {
-          _errorMessage = "Google sign-in cancelled";
-        });
-        return;
-      }
+      // ✅ Safe provider access
+     // final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      //await authProvider.signInGoogle();
 
-      final googleAuth = await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      final userCred = await FirebaseAuth.instance.signInWithCredential(credential);
-
-      // ✅ If Google provides a name, set it
-      if (googleUser.displayName != null) {
-        await userCred.user?.updateDisplayName(googleUser.displayName!);
-        await userCred.user?.reload();
-      }
-
-      Navigator.pushReplacementNamed(context, '/home');
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, AppRouter.home);
     } on FirebaseAuthException catch (e) {
-      setState(() {
-        _errorMessage = e.message;
-      });
+      setState(() => _errorMessage = e.message);
+    } catch (e) {
+      setState(() => _errorMessage = 'Google sign-in failed. Please try again.');
     } finally {
-      setState(() {
-        _loading = false;
-      });
+      if (mounted) setState(() => _loading = false);
     }
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -108,7 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             const SizedBox(height: 24),
 
-            // ✅ Name field
+            // Full Name
             TextField(
               controller: nameController,
               decoration: InputDecoration(
@@ -121,6 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             const SizedBox(height: 16),
 
+            // Email
             TextField(
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
@@ -134,6 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             const SizedBox(height: 16),
 
+            // Password
             TextField(
               controller: passwordController,
               obscureText: true,
@@ -192,7 +183,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Center(
                         child: TextButton(
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/login');
+                            Navigator.pushReplacementNamed(context, AppRouter.login);
                           },
                           child: const Text(
                             "Already have an account? Sign In",

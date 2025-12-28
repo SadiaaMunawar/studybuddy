@@ -65,13 +65,21 @@ class _ResourceScreenState extends State<ResourceScreen> {
             ),
             const SizedBox(height: 12),
 
-            // Save button
+            // Save button (updated style)
             ElevatedButton.icon(
               onPressed: _addResource,
-              icon: const Icon(Icons.save),
-              label: const Text('Add Resource'),
+              icon: const Icon(Icons.save, size: 22),
+              label: const Text(
+                'Add Resource',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.indigo,
+                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+                minimumSize: const Size.fromHeight(50), // ✅ Bigger button height
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
             const SizedBox(height: 20),

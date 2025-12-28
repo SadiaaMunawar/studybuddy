@@ -13,7 +13,7 @@ dependencies:
   fl_chart: ^0.66.0
 
   # Calendar
-  table_calendar: ^3.0.8   # ✅ downgraded for intl 0.17.0 compatibility
+  table_calendar: ^3.0.8   # ✅ downgraded for intl compatibility
 
   # Firebase
   firebase_core: ^3.5.0
@@ -34,17 +34,20 @@ dependencies:
   provider: ^6.1.2
 
   # Utilities
-  intl: ^0.17.0        # ✅ kept for charts_flutter
+  intl: ^0.19.0        # ✅ upgraded for Syncfusion PDF
   timezone: ^0.9.2
 
   # Notifications
   flutter_local_notifications: ^17.2.3
 
-  # Charts
-  charts_flutter: ^0.12.0
-
   # UI Enhancements
   google_fonts: ^6.2.0
+
+  # OCR / File handling
+  google_mlkit_text_recognition: ^0.11.0
+  image_picker: ^1.0.0
+  file_picker: ^8.0.0
+  syncfusion_flutter_pdf: ^28.1.36
 
 dev_dependencies:
   flutter_test:
@@ -55,4 +58,4 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/study.png
+    - assets/images/graduation-hat.png

@@ -70,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               children: [
                 // Logo image (tinted white if needed)
                 Image.asset(
-                  'assets/images/study.png',
+                  'assets/images/graduation-hat.png',
                   height: 100,
                   width: 100,
                   color: Colors.white, // ✅ makes logo appear white

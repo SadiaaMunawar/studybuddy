@@ -162,9 +162,19 @@ class _StudyPlanScreenState extends State<StudyPlanScreen> {
             // Tasks
             ElevatedButton.icon(
               onPressed: _addTask,
-              icon: const Icon(Icons.add),
-              label: const Text('Add Task'),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.indigo),
+              icon: const Icon(Icons.add, size: 22),
+              label: const Text(
+                'Add Task',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.indigo,
+                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+                minimumSize: const Size.fromHeight(50), // ✅ Bigger button
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
             ),
             const SizedBox(height: 12),
             Expanded(
@@ -188,8 +198,18 @@ class _StudyPlanScreenState extends State<StudyPlanScreen> {
             // Save Plan
             ElevatedButton(
               onPressed: _savePlan,
-              child: const Text('Save Study Plan'),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              child: const Text(
+                'Save Study Plan',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+                minimumSize: const Size.fromHeight(50), // ✅ Bigger button
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
             ),
             const SizedBox(height: 12),
 

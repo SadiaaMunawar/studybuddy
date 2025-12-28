@@ -27,26 +27,26 @@ class StudyBuddyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => TaskProvider()),
-        ChangeNotifierProvider(create: (_) => TimerProvider()),
-      ],
-      child: Consumer<ThemeProvider>(
-        builder: (_, theme, __) {
-          return MaterialApp(
-            title: 'Study Buddy',
-            theme: buildLightTheme(),
-            darkTheme: ThemeData.dark(), // or a custom buildDarkTheme()
-            themeMode: theme.mode,
-            debugShowCheckedModeBanner: false,
-            initialRoute: AppRouter.splash,
-            onGenerateRoute: AppRouter.onGenerateRoute,
-          );
-        },
-      ),
-    );
+   return MultiProvider(
+  providers: [
+    ChangeNotifierProvider(create: (_) => ThemeProvider()),
+    ChangeNotifierProvider(create: (_) => AuthProvider()), // ✅
+    ChangeNotifierProvider(create: (_) => TaskProvider()),
+    ChangeNotifierProvider(create: (_) => TimerProvider()),
+  ],
+  child: Consumer<ThemeProvider>(
+    builder: (_, theme, __) {
+      return MaterialApp(
+        title: 'Study Buddy',
+        theme: buildLightTheme(),
+        darkTheme: ThemeData.dark(),
+        themeMode: theme.mode,
+        debugShowCheckedModeBanner: false,
+        initialRoute: AppRouter.splash,
+        onGenerateRoute: AppRouter.onGenerateRoute,
+      );
+    },
+  ),
+);
   }
 }

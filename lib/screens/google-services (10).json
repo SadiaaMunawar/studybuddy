@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "290916704612",
+    "firebase_url": "https://studybuddy-c7d2c-default-rtdb.firebaseio.com",
     "project_id": "studybuddy-c7d2c",
     "storage_bucket": "studybuddy-c7d2c.firebasestorage.app"
   },

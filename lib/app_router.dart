@@ -17,6 +17,8 @@ import 'screens/study_groups_screen.dart';
 import 'screens/help_screen.dart';
 import 'screens/about_screen.dart';
 import 'screens/notifications_screen.dart';
+// ✅ Import OCR screen
+import 'screens/ocr_screen.dart';
 
 class AppRouter {
   static const String splash = '/';
@@ -37,6 +39,8 @@ class AppRouter {
   static const String help = '/help';
   static const String about = '/about';
   static const String notifications = '/notifications';
+  // ✅ New OCR route constant
+  static const String ocr = '/ocr';
 
   static Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -76,6 +80,9 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const AboutScreen());
       case notifications:
         return MaterialPageRoute(builder: (_) => const NotificationsScreen());
+      // ✅ OCR route handler
+      case ocr:
+        return MaterialPageRoute(builder: (_) => const OcrScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
