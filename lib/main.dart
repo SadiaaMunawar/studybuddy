@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart'; // ✅ Hive
 import 'theme/app_theme.dart';
 import 'providers/auth_provider.dart';
 import 'providers/task_provider.dart';
@@ -13,12 +14,22 @@ import 'app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // ✅ Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // ✅ Initialize Hive (local storage)
+  await Hive.initFlutter();
+
+  // Optionally register Hive adapters for your models
+  // Hive.registerAdapter(TaskAdapter()); // if you have a Task model
+
+  // ✅ Initialize your custom services
   await LocalStorageService.init();
   await NotificationService.init();
-
+  
   runApp(const StudyBuddyApp());
 }
 
@@ -27,26 +38,26 @@ class StudyBuddyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return MultiProvider(
-  providers: [
-    ChangeNotifierProvider(create: (_) => ThemeProvider()),
-    ChangeNotifierProvider(create: (_) => AuthProvider()), // ✅
-    ChangeNotifierProvider(create: (_) => TaskProvider()),
-    ChangeNotifierProvider(create: (_) => TimerProvider()),
-  ],
-  child: Consumer<ThemeProvider>(
-    builder: (_, theme, __) {
-      return MaterialApp(
-        title: 'Study Buddy',
-        theme: buildLightTheme(),
-        darkTheme: ThemeData.dark(),
-        themeMode: theme.mode,
-        debugShowCheckedModeBanner: false,
-        initialRoute: AppRouter.splash,
-        onGenerateRoute: AppRouter.onGenerateRoute,
-      );
-    },
-  ),
-);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()), // ✅
+        ChangeNotifierProvider(create: (_) => TaskProvider()),
+        ChangeNotifierProvider(create: (_) => TimerProvider()),
+      ],
+      child: Consumer<ThemeProvider>(
+        builder: (_, theme, __) {
+          return MaterialApp(
+            title: 'Study Buddy',
+            theme: buildLightTheme(),
+            darkTheme: ThemeData.dark(),
+            themeMode: theme.mode,
+            debugShowCheckedModeBanner: false,
+            initialRoute: AppRouter.splash,
+            onGenerateRoute: AppRouter.onGenerateRoute,
+          );
+        },
+      ),
+    );
   }
 }

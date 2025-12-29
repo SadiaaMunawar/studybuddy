@@ -24,14 +24,35 @@ class Task {
     required this.createdAt,
   });
 
-  /// Build Task from Firestore map
+  /// Build Task from Firestore DocumentSnapshot
+  factory Task.fromFirestore(DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
+    return Task(
+      id: doc.id,
+      title: data['title'] ?? '',
+      notes: data['notes'],
+      dueDate: (data['dueDate'] as Timestamp).toDate(),
+      priority: TaskPriority.values[
+          (data['priority'] != null && data['priority'] is int)
+              ? data['priority']
+              : 1], // default to medium
+      completed: data['completed'] ?? false,
+      userId: data['userId'] ?? '',
+      createdAt: (data['createdAt'] as Timestamp).toDate(),
+    );
+  }
+
+  /// Build Task from Firestore map (when you already have id separately)
   factory Task.fromMap(Map<String, dynamic> map, String id) {
     return Task(
       id: id,
       title: map['title'] ?? '',
       notes: map['notes'],
       dueDate: (map['dueDate'] as Timestamp).toDate(),
-      priority: TaskPriority.values[map['priority'] ?? 1],
+      priority: TaskPriority.values[
+          (map['priority'] != null && map['priority'] is int)
+              ? map['priority']
+              : 1],
       completed: map['completed'] ?? false,
       userId: map['userId'] ?? '',
       createdAt: (map['createdAt'] as Timestamp).toDate(),
