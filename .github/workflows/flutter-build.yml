@@ -1,8 +1,10 @@
-name: Flutter Build
+name: Flutter CI
 
 on:
   push:
-    branches: [ main ]   # or whichever branch you want to trigger builds
+    branches: [ "main" ]   # runs whenever you push to main
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -10,30 +12,18 @@ jobs:
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Setup Flutter
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.38.4'   # match your local Flutter SDK
+          flutter-version: "3.24.0"   # match your SDK version
 
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --release
+      - name: Run analyzer
+        run: flutter analyze
 
-      - name: Build AAB
-        run: flutter build appbundle --release
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
-
-      - name: Upload AAB
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-aab
-          path: build/app/outputs/bundle/release/app-release.aab
+      - name: Run tests
+        run: flutter test
